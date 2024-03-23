@@ -63,6 +63,7 @@ window.addEventListener('beforeunload', function(e) {
         video.muted = true;
         video.pause();
     });
+    console.log("out");
 
     e.preventDefault(); //per the standard
     e.returnValue = ''; //required for Chrome
