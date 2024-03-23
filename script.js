@@ -60,7 +60,6 @@ window.onblur = function(e) {
     let videos = document.querySelectorAll("video");
     videos.forEach((video) => {
         // We can only control playback without insteraction if video is mute
-        video.muted = true;
         video.pause();
     });
     console.log("out");
