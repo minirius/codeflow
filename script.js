@@ -1,4 +1,4 @@
-function playPauseVideo() {
+/*function playPauseVideo() {
     let videos = document.querySelectorAll("video");
     videos.forEach((video) => {
         // We can only control playback without insteraction if video is mute
@@ -26,7 +26,7 @@ function playPauseVideo() {
             });
         }
     });
-}
+}*/
 
 async function main() {
     const response = await fetch("https://raw.githubusercontent.com/minirius/codeflow/main/videos/videos.json");
@@ -51,9 +51,20 @@ async function main() {
         </div>
         `;
     });
-
-    // And you would kick this off where appropriate with:
-    playPauseVideo();
 }
 
 window.addEventListener('DOMContentLoaded', main());
+window.addEventListener('beforeunload', function(e) {
+    //following two lines will cause the browser to ask the user if they
+    //want to leave. The text of this dialog is controlled by the browser.
+    let videos = document.querySelectorAll("video");
+    videos.forEach((video) => {
+        // We can only control playback without insteraction if video is mute
+        video.muted = true;
+        video.pause();
+    });
+
+    e.preventDefault(); //per the standard
+    e.returnValue = ''; //required for Chrome
+    //else: user is allowed to leave without a warning dialog
+});
