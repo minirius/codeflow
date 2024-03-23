@@ -1,0 +1,148 @@
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap');
+
+body {
+    padding: 0px;
+    margin: 0px;
+    font-family: "Montserrat", sans-serif;
+    font-optical-sizing: auto;
+    font-style: normal;
+    background-color: black;
+    color: rgb(220, 220, 220);
+
+}
+
+.navbar {
+    position: fixed;
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
+    top:0px;
+    padding:20px;
+    padding-top: 10px;
+    padding-bottom: 10px;
+    width:calc( 100vw - 40px );
+    z-index: 99;
+    background-image: linear-gradient(rgba(0, 0, 0, 1), rgba(0, 0, 0, 0.8));;
+    z-index:98;
+}
+
+.headerLinks {
+    padding-left: 50px;
+}
+
+.leftHeader {
+    display: flex;
+    align-items: center;
+    justify-content: left;
+    width: calc(50vw - 20px);
+}
+
+.link {
+    text-decoration: none;
+    color: rgb(220, 220, 220);
+    padding: 10px;
+    padding-left: 20px;
+    padding-right: 20px;
+}
+.link:hover {
+    color: red;
+}
+/*
+.headerSelect {
+    display: inline-block;
+    height: 5px;
+    width: 100%;
+    background-color: red;
+    border-radius: 5px;
+}
+*/
+.rightHeader {
+    width: calc(50vw - 20px);
+    padding: 20px;
+    display: flex;
+    align-items: center;
+    justify-content: right;
+}
+#headerIcon {
+    height: 55px;
+    width: 80px;
+}
+
+.main {
+    background-color: black;
+    z-index:50;
+}
+
+.searchBar {
+    background-color: rgb(40, 40, 40);
+    border: 1px solid black;
+    color: rgb(220, 220, 220);
+    width: 30vw;
+    border-radius: 10px;
+    padding: 12px;
+}
+
+.searchBar:focus {
+    outline-width: 0px;
+}
+
+.title {
+    padding: 10px;
+    padding-left: 30px;
+}
+
+.tendances {
+    padding: 30px;
+    margin-bottom:0px;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: flex-start;
+}
+
+.videoContainer>img {
+    border-radius: 10px;
+    width: 100%;
+}
+
+.videoContainer>video {
+    border-radius: 10px;
+    width: 100%;
+}
+
+
+.videoContainer>h5 {
+    margin-top: 5px;
+    margin-bottom: 5px;
+}
+
+.videoContainer>.timecode {
+    position:absolute;
+    right: 25px;
+    bottom: 100px;
+    background-color: black;
+    padding-left: 5px;
+    padding-right: 5px;
+    border-radius: 4px;
+}
+
+.videoContainer>p {
+    text-overflow: ellipsis;
+    overflow: hidden; 
+    font-size: smaller;
+    white-space: nowrap;
+}
+
+.videoContainer {
+    position: relative;
+    display: inline-block;
+    border-radius: 10px;
+    padding: 10px;
+    width: 300px;
+    top:0px;
+    left:0px;
+    right:0px;
+    bottom:0px;
+    flex-grow: 1;
+}
