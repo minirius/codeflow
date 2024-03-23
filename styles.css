@@ -109,6 +109,8 @@ body {
 .videoContainer>video {
     border-radius: 10px;
     width: 100%;
+    height: fit-content;
+    object-fit: cover;
 }
 
 
