@@ -52,8 +52,8 @@ async function main() {
         `:*/
         video = document.createElement("video");
         video.preload = "auto"
-        video.onmouseover = function(this) {this.play()}
-        video.onmouseout = function(this) {this.pause();this.currentTime=0;}
+        video.onmouseover = function(e) {video.play()}
+        video.onmouseout = function(e) {video.pause();video.currentTime=0;}
 
         document.getElementById("tendances").appendChild(video);
     });
