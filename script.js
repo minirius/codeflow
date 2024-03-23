@@ -40,7 +40,7 @@ async function main() {
         /*if(description.length > 50) {
             description = description.substr(0, 50);
         }*/
-        document.getElementById("tendances").innerHTML+= `
+        /*document.getElementById("tendances").innerHTML+= `
         <div class="videoContainer">
             <video preload="auto" onmouseover="this.play()" onmouseout="this.pause();this.currentTime=0;"  onloadstart="console.log('load start...')">
                 <source src="`+movie["sources"][0]+`#t=0.1" />
@@ -49,7 +49,13 @@ async function main() {
             <p>`+description+`</p>
             <span class="timecode">3:01</span>
         </div>
-        `;
+        `:*/
+        video = document.createElement("video");
+        video.preload = "auto"
+        video.onmouseover = function(this) {this.play()}
+        video.onmouseout = function(this) {this.pause();this.currentTime=0;}
+
+        document.getElementById("tendances").appendChild(video);
     });
 }
 
