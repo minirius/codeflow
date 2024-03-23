@@ -1,5 +1,5 @@
 async function main() {
-    const response = await fetch("https://gist.githubusercontent.com/deepakpk009/99fd994da714996b296f11c3c371d5ee/raw/28c4094ae48892efb71d5122c1fd72904088439b/media.json");
+    const response = await fetch("https://raw.githubusercontent.com/minirius/codeflow/main/videos/videos.json");
     movies = await response.json();
     movies = movies["categories"][0]["videos"];
     movies.forEach(movie => {
