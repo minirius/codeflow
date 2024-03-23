@@ -42,7 +42,7 @@ async function main() {
         }*/
         document.getElementById("tendances").innerHTML+= `
         <div class="videoContainer">
-            <video preload="auto" onmouseover="this.play()" onmouseout="this.pause();this.currentTime=0;">
+            <video preload="auto" onmouseover="this.play()" onmouseout="this.pause();this.currentTime=0;"  onloadstart="console.log('load start...')">
                 <source src="`+movie["sources"][0]+`#t=0.1" />
             </video>
             <h5>`+movie["title"]+`</h5>
