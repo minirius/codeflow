@@ -33,33 +33,55 @@ async function main() {
     movies = await response.json();
     movies = movies["categories"][0]["videos"];
     movies.forEach(movie => {
-        console.log("Titre: "+movie["title"]);
-        console.log("Desc: "+movie["description"]);
-        console.log("Link: "+movie["sources"][0]);
+        index = movie["id"];
         description = movie["description"];
         /*if(description.length > 50) {
             description = description.substr(0, 50);
         }*/
-        /*document.getElementById("tendances").innerHTML+= `
-        <div class="videoContainer">
-            <video preload="auto" onmouseover="this.play()" onmouseout="this.pause();this.currentTime=0;"  onloadstart="console.log('load start...')">
+        document.getElementById("tendances").innerHTML+= `
+        <a class="videoContainer" href="video.html?v=`+index+`">
+            <video id="video`+index+`" muted preload="metadata" onmouseover="this.play()" onwaiting="console.log('Wait...')" onmouseout="this.pause();this.currentTime=0;" onloadstart="console.log('load start...')" ondurationchange="document.getElementById('timecode`+index+`').innerHTML = Math.floor(this.duration / 60)+':'+Math.round(this.duration - Math.floor(this.duration / 60)    * 60)">
                 <source src="`+movie["sources"][0]+`#t=0.1" />
             </video>
             <h5>`+movie["title"]+`</h5>
             <p>`+description+`</p>
-            <span class="timecode">3:01</span>
-        </div>
-        `:*/
+            <span class="progressbar"></span>
+            <span class="timecode" id="timecode`+index+`">loading</span>
+        </a>
+        `;
+        /*div = document.createElement("div");
+        div.className = "videoContainer"
+
         video = document.createElement("video");
         video.preload = "auto"
-        video.onmouseover = function(e) {video.play()}
-        video.onmouseout = function(e) {video.pause();video.currentTime=0;}
+        video.onmouseover = function(e) {this.play()}
+        video.onmouseout = function(e) {this.pause();this.currentTime=0;}
+        video.onloadedmetadata = function(e) {
+            timecode.innerHTML = this.duration;
+        }
 
-        document.getElementById("tendances").appendChild(video);
+        source = document.createElement("source");
+        source.src = movie["sources"][0];
+
+        h5 = document.createElement("h5")
+        h5.innerHTML = movie["title"];
+
+        p = document.createElement("p")
+        p.innerHTML = description;
+
+        timecode = document.createElement("span");
+        timecode.className = "timecode"
+
+        video.appendChild(source);
+        div.appendChild(video);
+        div.appendChild(h5);
+        div.appendChild(p);
+        div.appendChild(timecode);
+        document.getElementById("tendances").appendChild(div);*/
     });
 }
 
-window.addEventListener('DOMContentLoaded', main());
+window.addEventListener('DOMCloontentLoaded', main());
 window.onblur = function(e) {
     //following two lines will cause the browser to ask the user if they
     //want to leave. The text of this dialog is controlled by the browser.
@@ -68,7 +90,6 @@ window.onblur = function(e) {
         // We can only control playback without insteraction if video is mute
         video.pause();
     });
-    console.log("out");
 
     e.preventDefault(); //per the standard
     e.returnValue = ''; //required for Chrome
