@@ -21,6 +21,10 @@ async function main() {
             source.src = movie["sources"][0];
             document.getElementById("video").appendChild(source);
 
+            source = document.createElement("source");
+            source.src = movie["sources"][0];
+            document.getElementById("videoBlur").appendChild(source);
+
             h5 = document.createElement("h3");
             h5.innerHTML = movie["title"];
             p = document.createElement("p");
@@ -30,6 +34,24 @@ async function main() {
             document.getElementById("content").appendChild(p);
         }
 
+    });
+
+    playing = false;
+
+    document.getElementById("video").addEventListener("play", function() {
+        playing = true;
+        document.getElementById("videoBlur").play()
+    })
+
+    document.getElementById("video").addEventListener("pause", function() {
+        playing = false;
+        document.getElementById("videoBlur").pause()
+    })
+
+    document.getElementById("video").addEventListener("timeupdate", (event) => {
+        if(!playing) {
+            document.getElementById("videoBlur").currentTime = document.getElementById("video").currentTime
+        }
     });
 }
 
