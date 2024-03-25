@@ -10,7 +10,8 @@ function findGetParameter(parameterName) {
 }
 
 async function main() {
-    const response = await fetch("https://raw.githubusercontent.com/minirius/codeflow/main/videos/videos.json");
+    //const response = await fetch("https://raw.githubusercontent.com/minirius/codeflow/main/videos/videos.json");
+    const response = await fetch("http://127.0.0.1:5500/videos/videos.json");
     movies = await response.json();
     movies = movies["categories"][0]["videos"];
     videoId = findGetParameter("v");

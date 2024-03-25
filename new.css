@@ -1,0 +1,37 @@
+#hero {
+    height: calc(100vh - 100px);
+    width: 100%;
+    background-color: #cccccc;
+    background-position: center; /* Center the image */
+    background-repeat: no-repeat; /* Do not repeat the image */
+    background-size: cover;
+    z-index: 1;
+}
+
+#heroCover {
+    position: fixed;
+    top:100px;
+    left:0px;
+    z-index: 2;
+    height: calc(100vh - 100px);
+    width: 100%;
+    background-image: linear-gradient(rgba(0, 0, 0, 0), rgba(0, 0, 0, 0.8), rgba(0, 0, 0, 1));
+}
+
+#hero > * {
+    z-index:3;
+}
+
+#title {
+    position: fixed;
+    bottom: 150px;
+    left: 50px;
+    font-size: 50px;
+}
+
+#desc {
+    position: fixed;
+    bottom: 100px;
+    left: 50px;
+    font-size: 20px;
+}
