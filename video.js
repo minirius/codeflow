@@ -56,4 +56,16 @@ async function main() {
     });
 }
 
-window.addEventListener('DOMContentLoaded', main());
+async function pub() {
+    source = document.createElement("source");
+    source.src ="http://127.0.0.1:5500/videos/PUB%20BROSSACHETTE%20(ou%20fourchadent).mp4";
+    document.getElementById("video").appendChild(source);
+    document.getElementById("video").controls = false;
+
+    h5 = document.createElement("h3");
+    h5.innerHTML = "ACHETEZ LA BROSSACHETTE (fourchadent)";
+
+    document.getElementById("content").appendChild(h5);
+}
+
+window.addEventListener('DOMContentLoaded', pub());
