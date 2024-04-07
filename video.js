@@ -9,6 +9,11 @@ function findGetParameter(parameterName) {
     return result;
 }
 
+function getRandomIntInclusive(min, max) {
+  min = Math.ceil(min);
+  max = Math.floor(max);
+  return Math.floor(Math.random() * (max - min + 1)) + min;
+}
 class VideoWithBackground {
     video;
     canvas;
@@ -72,10 +77,14 @@ async function main() {
             source = document.createElement("source");
             source.src = movie["sources"][0];
             document.getElementById("video").appendChild(source);
+            document.getElementById("video").onmouseleave = function() {this.controls = false}
+            document.getElementById("video").onmouseenter = function() {this.controls = true}
+            document.getElementById("video").poster = movie["miniature"]
+            document.getElementById("video").addEventListener("ended", function() {})
 
-            source = document.createElement("source");
+            /*source = document.createElement("source");
             source.src = movie["sources"][0];
-            document.getElementById("videoBlur").appendChild(source);
+            document.getElementById("videoBlur").appendChild(source);*/
 
             h5 = document.createElement("h3");
             h5.innerHTML = movie["title"];
@@ -109,16 +118,56 @@ async function main() {
     });*/
 }
 
+tempsRestant = 9;
+canSkip = false;
+
+function allowSkip() {
+  setTimeout(() => {
+    if(tempsRestant == 0) {
+      canSkip = true;
+      document.getElementById("pubSkip").innerHTML = "Passer l'annonce"
+      document.getElementById("pubSkip").style.cursor = "pointer"
+      document.getElementById("pubSkip").style.opacity = "100%"
+    } else {
+      document.getElementById("pubSkip").innerHTML = `${tempsRestant} sec `;
+      tempsRestant -= 1;
+      allowSkip()
+    }
+  }, 1000);
+}
+
 async function pub() {
     source = document.createElement("source");
-    source.src ="http://127.0.0.1:5500/videos/PUB%20BROSSACHETTE%20(ou%20fourchadent).mp4";
+    source.src =`http://127.0.0.1:5500/pubs/pub${getRandomIntInclusive(1, 4)}.mp4`;
     document.getElementById("video").appendChild(source);
     document.getElementById("video").controls = false;
 
-    h5 = document.createElement("h3");
-    h5.innerHTML = "ACHETEZ LA BROSSACHETTE (fourchadent)";
+    document.getElementById("pubPlay").onclick = function() {
+      document.getElementById("video").play()
+      document.getElementById("pubPlay").style.display = "none"
+      document.getElementById("pubSkip").style.display = "inline-block"
+      allowSkip()
+    }
 
-    document.getElementById("content").appendChild(h5);
+    document.getElementById("pubSkip").onclick = function() {
+      document.getElementById("pubSkip").style.display = "none"
+      document.getElementById("pubInfo").style.display = "none"
+      document.getElementById("video").pause()
+      document.getElementById("video").innerHTML = ""
+      document.getElementById("content").innerHTML = ""
+      main()
+      document.getElementById("video").load()
+    }
+
+    document.getElementById("video").addEventListener("ended", function() {
+      document.getElementById("pubSkip").style.display = "none"
+      document.getElementById("pubInfo").style.display = "none"
+      document.getElementById("video").pause()
+      document.getElementById("video").innerHTML = ""
+      main()
+      document.getElementById("video").load()
+      document.getElementById("video").play();
+    })
 }
 
 window.addEventListener('DOMContentLoaded', pub());

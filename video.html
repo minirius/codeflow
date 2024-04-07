@@ -38,8 +38,16 @@
     <div style="height: 100px;"></div>
     <div class="main">
         <div class="left">
-            <video preload="auto" id="video" onmouseleave="this.controls = false" onmouseenter="this.controls = true"></video>
-            <div id="pubSkip">Passer l'annonce</div>
+            <div style="position: relative;">
+                <video preload="auto" id="video"></video>
+                <div id="pubSkip">10 sec</div>
+                <ion-icon name="play-outline" id="pubPlay"></ion-icon>
+                <div id="pubInfo">
+                    <ion-icon name="information-circle-outline" style="font-size: 25px;"></ion-icon>
+                    Publicité
+                </div>
+            </div>
+            
             <!-- <video preload="auto" id="videoBlur" muted></video>-->
             <canvas aria-hidden="true" class="canvas" id="videoBlur"></canvas>
             <div class="info">
