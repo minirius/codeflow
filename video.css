@@ -21,6 +21,22 @@
     z-index:50;
 }
 
+#pubPlay {
+
+}
+
+#pubSkip {
+    position: relative;
+    left: 70vw;
+    bottom:20px;
+    width: 150px;
+    background-color: black;
+    border: 2px solid white;
+    padding: 10px;
+    z-index:52;
+    
+}
+
 #videoBlur {
     width: 50vw;
     margin-top:50px;
