@@ -52,6 +52,15 @@
     gap:10px;
 }
 
+#time {
+    position: absolute;
+    bottom: 3px;
+    left: 20px;
+    height: 3px;
+    background-color: yellow;
+    border-radius: 1px;
+}
+
 #videoBlur {
     width: 50vw;
     margin-top:50px;

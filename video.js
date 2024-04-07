@@ -81,6 +81,7 @@ async function main() {
             document.getElementById("video").onmouseenter = function() {this.controls = true}
             document.getElementById("video").poster = movie["miniature"]
             document.getElementById("video").addEventListener("ended", function() {})
+            document.getElementById("video").addEventListener("timeupdate", function() {})
 
             /*source = document.createElement("source");
             source.src = movie["sources"][0];
@@ -162,12 +163,19 @@ async function pub() {
     document.getElementById("video").addEventListener("ended", function() {
       document.getElementById("pubSkip").style.display = "none"
       document.getElementById("pubInfo").style.display = "none"
+      document.getElementById("time").style.width = "0px"
       document.getElementById("video").pause()
       document.getElementById("video").innerHTML = ""
       main()
       document.getElementById("video").load()
       document.getElementById("video").play();
     })
+
+    document.getElementById("video").addEventListener("timeupdate", (event) => {
+      percentage = (document.getElementById("video").currentTime / document.getElementById("video").duration ) * 100
+      document.getElementById("time").style.width = `calc(${percentage}% - 40px)`
+      console.log(parseInt(document.getElementById("video").currentTime))
+  });
 }
 
 window.addEventListener('DOMContentLoaded', pub());
