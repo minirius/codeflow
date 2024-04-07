@@ -9,6 +9,57 @@ function findGetParameter(parameterName) {
     return result;
 }
 
+class VideoWithBackground {
+    video;
+    canvas;
+    step;
+    ctx;
+  
+    constructor(videoId, canvasId) {
+      this.video = document.getElementById(videoId);
+      this.canvas = document.getElementById(canvasId);
+  
+      window.addEventListener("load", this.init, false);
+      window.addEventListener("unload", this.cleanup, false);
+
+      console.log(document.getElementById(videoId).offsetHeight);
+      document.getElementById(canvasId).style.height = document.getElementById(videoId).offsetHeight+50
+    }
+  
+    draw = () => {
+      this.ctx.drawImage(this.video, 0, 0, this.canvas.width, this.canvas.height);
+    };
+  
+    drawLoop = () => {
+      this.draw();
+      this.step = window.requestAnimationFrame(this.drawLoop);
+    };
+  
+    drawPause = () => {
+      window.cancelAnimationFrame(this.step);
+      this.step = undefined;
+    };
+  
+    init = () => {
+      this.ctx = this.canvas.getContext("2d");
+      this.ctx.filter = "blur(1px)";
+  
+      this.video.addEventListener("loadeddata", this.draw, false);
+      this.video.addEventListener("seeked", this.draw, false);
+      this.video.addEventListener("play", this.drawLoop, false);
+      this.video.addEventListener("pause", this.drawPause, false);
+      this.video.addEventListener("ended", this.drawPause, false);
+    };
+  
+    cleanup = () => {
+      this.video.removeEventListener("loadeddata", this.draw);
+      this.video.removeEventListener("seeked", this.draw);
+      this.video.removeEventListener("play", this.drawLoop);
+      this.video.removeEventListener("pause", this.drawPause);
+      this.video.removeEventListener("ended", this.drawPause);
+    };
+}
+
 async function main() {
     //const response = await fetch("https://raw.githubusercontent.com/minirius/codeflow/main/videos/videos.json");
     const response = await fetch("http://127.0.0.1:5500/videos/videos.json");
@@ -36,8 +87,10 @@ async function main() {
         }
 
     });
+    
+    const el = new VideoWithBackground('video', 'videoBlur');
 
-    playing = false;
+    /*playing = false;
 
     document.getElementById("video").addEventListener("play", function() {
         playing = true;
@@ -53,7 +106,7 @@ async function main() {
         if(!playing) {
             document.getElementById("videoBlur").currentTime = document.getElementById("video").currentTime
         }
-    });
+    });*/
 }
 
 window.addEventListener('DOMContentLoaded', main());

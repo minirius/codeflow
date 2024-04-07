@@ -10,7 +10,7 @@
               "http://127.0.0.1:5500/videos/Algorithme de parcours en largeur dun arbre binaire.mp4"
             ],
             "subtitle": "Pierre",
-            "miniature": "http://127.0.0.1:5500/miniatures/###########.png",
+            "miniature": "http://127.0.0.1:5500/miniatures/miniature_1.png",
             "title": "Découvrez l'algorithme de parcours en largeur d'un arbre binaire"
           },
           {
@@ -20,7 +20,7 @@
               "http://127.0.0.1:5500/videos/############.mp4"
             ],
             "subtitle": "Pierre",
-            "miniature": "http://127.0.0.1:5500/miniatures/############.png",
+            "miniature": "http://127.0.0.1:5500/miniatures/miniature_4.png",
             "title": "Maîtrisez l'algorithme de Dijkstra en quelques minutes !"
           },
           {
@@ -30,7 +30,7 @@
               "http://127.0.0.1:5500/videos/############.mp4"
             ],
             "subtitle": "Pierre",
-            "miniature": "http://127.0.0.1:5500/miniatures/############.png",
+            "miniature": "http://127.0.0.1:5500/miniatures/miniature_7.png",
             "title": "Exploration de l'algorithme de vecteur de distance RIP"
           },
           {
@@ -40,7 +40,7 @@
               "http://127.0.0.1:5500/videos/############.mp4"
             ],
             "subtitle": "Pierre",
-            "miniature": "http://127.0.0.1:5500/miniatures/############.png",
+            "miniature": "http://127.0.0.1:5500/miniatures/miniature_3.png",
             "title": "Tout sur le protocole OSPF en moins de 7 minutes !"
           }
         ]
@@ -55,7 +55,7 @@
               "http://127.0.0.1:5500/videos/############.mp4"
             ],
             "subtitle": "Pierre",
-            "miniature": "http://127.0.0.1:5500/miniatures/############.png",
+            "miniature": "http://127.0.0.1:5500/miniatures/miniature_6.png",
             "title": "Exploration de l'algorithme de tri fusion par la méthode Diviser pour Régner"
           },
           {
@@ -65,7 +65,7 @@
               "http://127.0.0.1:5500/videos/############.mp4"
             ],
             "subtitle": "Pierre",
-            "miniature": "http://127.0.0.1:5500/miniatures/############.png",
+            "miniature": "http://127.0.0.1:5500/miniatures/miniature_5.png",
             "title": "La puissance de Diviser pour Régner en informatique"
           }
         ]
@@ -80,7 +80,7 @@
               "http://127.0.0.1:5500/videos/########.mp4"
             ],
             "subtitle": "Pierre",
-            "miniature": "http://127.0.0.1:5500/miniatures/.png",
+            "miniature": "http://127.0.0.1:5500/miniatures/miniature_2.png",
             "title": "Démystification du Machine Learning : L'algorithme KNN"
           }
         ]

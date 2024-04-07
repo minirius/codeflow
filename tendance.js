@@ -28,6 +28,23 @@
     });
 }*/
 
+function show(index) {
+    video = document.getElementById(`video${index}`);
+    poster = document.getElementById(`poster${index}`);
+    poster.style.display = "none";
+    video.style.display = "inline-block";
+    video.play();
+}
+
+function hide(index) {
+    video = document.getElementById(`video${index}`);
+    poster = document.getElementById(`poster${index}`);
+    poster.style.display = "inline-block";
+    video.style.display = "none";
+    video.pause();
+    video.currentTime = 0;
+}
+
 async function main() {
     //const response = await fetch("https://raw.githubusercontent.com/minirius/codeflow/main/videos/videos.json");
     const response = await fetch("http://127.0.0.1:5500/videos/videos.json");
@@ -40,14 +57,15 @@ async function main() {
             description = description.substr(0, 50);
         }*/
         document.getElementById("tendances").innerHTML+= `
-        <a class="videoContainer" href="video.html?v=`+index+`">
-            <video id="video`+index+`" muted preload="metadata" onmouseover="this.play()" onwaiting="console.log('Wait...')" onmouseout="this.pause();this.currentTime=0;" onloadstart="console.log('load start...')" ondurationchange="document.getElementById('timecode`+index+`').innerHTML = Math.floor(this.duration / 60)+':'+Math.round(this.duration - Math.floor(this.duration / 60)    * 60)">
-                <source src="`+movie["sources"][0]+`#t=0.1" />
+        <a class="videoContainer" href="video.html?v=${index}" onmouseover="show(${index})" onmouseout="hide(${index})">
+            <img id="poster${index}" src="${movie["miniature"]}"/>
+            <video id="video`+index+`" muted preload="metadata" onwaiting="console.log('Wait...')" onloadstart="console.log('load start...')" ondurationchange="document.getElementById('timecode`+index+`').innerHTML = Math.floor(this.duration / 60)+':'+Math.round(this.duration - Math.floor(this.duration / 60) * 60)">
+                <source src="${movie["sources"][0]}" />
             </video>
-            <h5>`+movie["title"]+`</h5>
-            <p>`+description+`</p>
+            <h5>${movie["title"]}</h5>
+            <p>${description}</p>
             <span class="progressbar"></span>
-            <span class="timecode" id="timecode`+index+`">loading</span>
+            <span class="timecode" id="timecode${index}">loading</span>
         </a>
         `;
         /*div = document.createElement("div");
