@@ -14,91 +14,20 @@ function getRandomIntInclusive(min, max) {
   max = Math.floor(max);
   return Math.floor(Math.random() * (max - min + 1)) + min;
 }
-class VideoWithBackground {
-    video;
-    canvas;
-    step;
-    ctx;
-  
-    constructor(videoId, canvasId) {
-      this.video = document.getElementById(videoId);
-      this.canvas = document.getElementById(canvasId);
-  
-      window.addEventListener("load", this.init, false);
-      window.addEventListener("unload", this.cleanup, false);
 
-      console.log(document.getElementById(videoId).offsetHeight);
-      document.getElementById(canvasId).style.height = document.getElementById(videoId).offsetHeight+50
-    }
-  
-    draw = () => {
-      this.ctx.drawImage(this.video, 0, 0, this.canvas.width, this.canvas.height);
-    };
-  
-    drawLoop = () => {
-      this.draw();
-      this.step = window.requestAnimationFrame(this.drawLoop);
-    };
-  
-    drawPause = () => {
-      window.cancelAnimationFrame(this.step);
-      this.step = undefined;
-    };
-  
-    init = () => {
-      this.ctx = this.canvas.getContext("2d");
-      this.ctx.filter = "blur(1px)";
-  
-      this.video.addEventListener("loadeddata", this.draw, false);
-      this.video.addEventListener("seeked", this.draw, false);
-      this.video.addEventListener("play", this.drawLoop, false);
-      this.video.addEventListener("pause", this.drawPause, false);
-      this.video.addEventListener("ended", this.drawPause, false);
-    };
-  
-    cleanup = () => {
-      this.video.removeEventListener("loadeddata", this.draw);
-      this.video.removeEventListener("seeked", this.draw);
-      this.video.removeEventListener("play", this.drawLoop);
-      this.video.removeEventListener("pause", this.drawPause);
-      this.video.removeEventListener("ended", this.drawPause);
-    };
-}
 
 async function main() {
     //const response = await fetch("https://raw.githubusercontent.com/minirius/codeflow/main/videos/videos.json");
-    const response = await fetch("http://127.0.0.1:5500/videos/videos.json");
-    movies = await response.json();
-    movies = movies["categories"][0]["videos"];
     videoId = findGetParameter("v");
-    console.log(videoId);
-    movies.forEach(movie => {
-        if(videoId == movie["id"]) {
-            source = document.createElement("source");
-            source.src = movie["sources"][0];
-            document.getElementById("video").appendChild(source);
-            document.getElementById("video").onmouseleave = function() {this.controls = false}
-            document.getElementById("video").onmouseenter = function() {this.controls = true}
-            document.getElementById("video").poster = movie["miniature"]
-            document.getElementById("video").addEventListener("ended", function() {})
-            document.getElementById("video").addEventListener("timeupdate", function() {})
-
-            /*source = document.createElement("source");
-            source.src = movie["sources"][0];
-            document.getElementById("videoBlur").appendChild(source);*/
-
-            h5 = document.createElement("h3");
-            h5.innerHTML = movie["title"];
-            p = document.createElement("p");
-            p.innerHTML = movie["description"];
-
-            document.getElementById("content").appendChild(h5);
-            document.getElementById("content").appendChild(p);
-        }
-
-    });
-    
-    const el = new VideoWithBackground('video', 'videoBlur');
+    const response = await fetch("http://127.0.0.1/videos.php?id="+videoId);
+    movie = await response.json();
+    source = document.createElement("source");
+    source.src = movie["video"];
+    document.getElementById("video").appendChild(source);
+    document.getElementById("video").onmouseleave = function() {this.controls = false}
+    document.getElementById("video").onmouseenter = function() {this.controls = true}
+    document.getElementById("video").poster = movie["thumbnail"];
+    document.getElementById("video").addEventListener("ended", function() {})
 
     /*playing = false;
 
@@ -119,7 +48,7 @@ async function main() {
     });*/
 }
 
-tempsRestant = 9;
+tempsRestant = 4;
 canSkip = false;
 
 function allowSkip() {
@@ -138,6 +67,43 @@ function allowSkip() {
 }
 
 async function pub() {
+
+    videoId = findGetParameter("v");
+    const response = await fetch("http://127.0.0.1/videos.php?id="+videoId);
+    movie = await response.json();
+
+    document.getElementById("likeText").innerText = movie["likes"];
+    document.getElementById("shareText").innerText = movie["shares"];
+
+    document.getElementById("userImg").src = movie["avatar"];
+    document.getElementById("userName").innerText = movie["name"];
+    /*source = document.createElement("source");
+    source.src = movie["sources"][0];
+    document.getElementById("videoBlur").appendChild(source);*/
+
+    h5 = document.createElement("h3");
+    h5.innerHTML = movie["titre"];
+    p = document.createElement("p");
+    p.innerHTML = movie["description"];
+
+    document.getElementById("content").appendChild(h5);
+    document.getElementById("content").appendChild(p);
+
+    const reponse2 = await fetch("http://127.0.0.1/comments.php?get&video_id="+videoId);
+    comments = await response2.json();
+
+    comments.forEach(comment => {
+      document.getElementById("commentList").innerHTML += `
+      <div class="commentDiv">
+          <div>
+              <img src="https://api.dicebear.com/8.x/thumbs/png?seed=Marius"/>
+              <h3>Test</h3>
+          </div>
+          <p>Simple commentaire pour tester le layout</p>
+      </div>
+      `;
+    });
+
     source = document.createElement("source");
     source.src =`http://127.0.0.1:5500/pubs/pub${getRandomIntInclusive(1, 4)}.mp4`;
     document.getElementById("video").appendChild(source);
@@ -151,19 +117,21 @@ async function pub() {
     }
 
     document.getElementById("pubSkip").onclick = function() {
-      document.getElementById("pubSkip").style.display = "none"
-      document.getElementById("pubInfo").style.display = "none"
-      document.getElementById("video").pause()
-      document.getElementById("video").innerHTML = ""
-      document.getElementById("content").innerHTML = ""
-      main()
-      document.getElementById("video").load()
+      if(canSkip) {
+        document.getElementById("pubSkip").style.display = "none"
+        document.getElementById("pubInfo").style.display = "none"
+        document.getElementById("time").style.display = "none"
+        document.getElementById("video").pause()
+        document.getElementById("video").innerHTML = ""
+        main()
+        document.getElementById("video").load()
+      }
     }
 
     document.getElementById("video").addEventListener("ended", function() {
       document.getElementById("pubSkip").style.display = "none"
       document.getElementById("pubInfo").style.display = "none"
-      document.getElementById("time").style.width = "0px"
+      document.getElementById("time").style.display = "none"
       document.getElementById("video").pause()
       document.getElementById("video").innerHTML = ""
       main()

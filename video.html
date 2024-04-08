@@ -40,7 +40,7 @@
         <div class="left">
             <div style="position: relative;">
                 <video preload="auto" id="video"></video>
-                <div id="pubSkip">10 sec</div>
+                <div id="pubSkip">5 sec</div>
                 <ion-icon name="play-outline" id="pubPlay"></ion-icon>
                 <div id="pubInfo">
                     <ion-icon name="information-circle-outline" style="font-size: 25px;"></ion-icon>
@@ -53,16 +53,16 @@
             <canvas aria-hidden="true" class="canvas" id="videoBlur"></canvas>
             <div class="info">
                 <div class="infoPart">
-                    <img id="userImg" src="https://thispersondoesnotexist.com/"/>
-                    <h4 id="userName">Marius Nerantzakis</h4>
+                    <img id="userImg" src=""/>
+                    <h4 id="userName"></h4>
                 </div>
                 <div class="infoPart">
                     <div class="buttonGroup" id="likeButton">
-                        <span>15.6k</span>
+                        <span id="likeText"></span>
                         <ion-icon name="heart-outline"></ion-icon>
                     </div>
                     <div class="buttonGroup" id="shareButton" onclick="if(navigator.share) {navigator.share(document.location.toString())}">
-                        <span>15.6k</span>
+                        <span id="shareText"></span>
                         <ion-icon name="share-social-outline"></ion-icon>
                     </div>
                 </div>
@@ -74,7 +74,8 @@
             <form>
                 <input type="text" name="commentaireInput" id="commentaireInput" placeholder="Laissez un commentaire !"/>
             </form>
-            <div class=""></div>
+            <div id="commentList">
+            </div>
         </div>
     </div>
     <script src="video.js"></script>

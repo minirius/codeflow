@@ -41,6 +41,7 @@
     display: none;
     text-align: center;
     opacity: 70%;
+    cursor: not-allowed;
 }
 
 #pubInfo {
@@ -79,6 +80,27 @@
     padding: 0px;
     margin-bottom: 50px
 }
+
+.commentDiv {
+    padding-top: 20px;
+}
+
+.commentDiv>div {
+    display: flex;
+    gap: 10px;
+    align-items: center;
+}
+
+.commentDiv>div>img {
+    border-radius: 50%;
+    width: 45px;
+    width: 45px;
+}
+
+.commentDiv>p{
+    margin-top: 5px;
+}
+
 
 .info {
     width: 50vw;

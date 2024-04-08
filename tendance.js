@@ -47,9 +47,8 @@ function hide(index) {
 
 async function main() {
     //const response = await fetch("https://raw.githubusercontent.com/minirius/codeflow/main/videos/videos.json");
-    const response = await fetch("http://127.0.0.1:5500/videos/videos.json");
+    const response = await fetch("http://127.0.0.1/videos.php");
     movies = await response.json();
-    movies = movies["categories"][0]["videos"];
     movies.forEach(movie => {
         index = movie["id"];
         description = movie["description"];
@@ -58,11 +57,11 @@ async function main() {
         }*/
         document.getElementById("tendances").innerHTML+= `
         <a class="videoContainer" href="video.html?v=${index}" onmouseover="show(${index})" onmouseout="hide(${index})">
-            <img id="poster${index}" src="${movie["miniature"]}"/>
+            <img id="poster${index}" src="${movie["thumbnail"]}"/>
             <video id="video`+index+`" muted preload="metadata" onwaiting="console.log('Wait...')" onloadstart="console.log('load start...')" ondurationchange="document.getElementById('timecode`+index+`').innerHTML = Math.floor(this.duration / 60)+':'+Math.round(this.duration - Math.floor(this.duration / 60) * 60)">
-                <source src="${movie["sources"][0]}" />
+                <source src="${movie["video"]}" />
             </video>
-            <h5>${movie["title"]}</h5>
+            <h5>${movie["titre"]}</h5>
             <p>${description}</p>
             <span class="progressbar"></span>
             <span class="timecode" id="timecode${index}">loading</span>
