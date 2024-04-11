@@ -113,3 +113,10 @@ window.onblur = function(e) {
     e.returnValue = ''; //required for Chrome
     //else: user is allowed to leave without a warning dialog
 };
+
+document.getElementById("searchButton").addEventListener("click", function(e) {
+    searchInput = document.getElementById("searchInput");
+    if(searchInput.value != "") {
+        window.location = "http://127.0.0.1:5500/search.html?search="+searchInput.value
+    }
+})

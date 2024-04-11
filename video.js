@@ -89,17 +89,17 @@ async function pub() {
     document.getElementById("content").appendChild(h5);
     document.getElementById("content").appendChild(p);
 
-    const reponse2 = await fetch("http://127.0.0.1/comments.php?get&video_id="+videoId);
+    const response2 = await fetch("http://127.0.0.1/comments.php?get&video_id="+videoId);
     comments = await response2.json();
 
     comments.forEach(comment => {
       document.getElementById("commentList").innerHTML += `
       <div class="commentDiv">
           <div>
-              <img src="https://api.dicebear.com/8.x/thumbs/png?seed=Marius"/>
-              <h3>Test</h3>
+              <img src="${comment["user_avatar"]}"/>
+              <h3>${comment["user_name"]}</h3>
           </div>
-          <p>Simple commentaire pour tester le layout</p>
+          <p>${comment["text"]}</p>
       </div>
       `;
     });
@@ -147,3 +147,14 @@ async function pub() {
 }
 
 window.addEventListener('DOMContentLoaded', pub());
+
+document.getElementById("commentForm").addEventListener("submit", async function(e) {
+  e.preventDefault();
+  console.log("sumbitted")
+  commentInput = document.getElementById("commentaireInput")
+  if(commentInput.value != "") {
+    console.log("Ok OK !" + commentInput.value)
+    const response2 = await fetch(`http://127.0.0.1/comments.php?add&video_id=${videoId}&auth_id=${"5"}&text=${commentInput.value}`);
+    location.reload();
+  }
+})

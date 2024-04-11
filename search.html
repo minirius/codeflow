@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="styles.css">
+    <title>NSI</title>
+
+    <script type="module" src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"></script>
+    <script nomodule src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js"></script>
+</head>
+<body>
+    <div class="sidebar">
+        <ion-icon name="close-outline" onclick="document.getElementsByClassName('sidebar')[0].style.left = '-100vw'"></ion-icon>
+        <h3>Menu</h3>
+        <a class="link" href="new.html">Nouveau</a>
+        <a class="link" href="favoris.html">Favoris</a>
+        <a class="link" href="categories.html">Catégories</a>
+    </div>
+    <div class="overlay"></div>
+    <div class="navbar">
+        <div class="leftHeader">
+            <ion-icon name="menu-outline" onclick="document.getElementsByClassName('sidebar')[0].style.left = '0'"></ion-icon>
+            <img src="assets/logo.png" alt="hello" id="headerIcon">
+            <div class="headerLinks">
+                <a class="link" href="new.html">Nouveau</a>
+                <a class="link" href="favoris.html">Favoris</a>
+                <a class="link" href="categories.html">Catégories</a>
+            </div>
+        </div>
+        <div class="rightHeader">
+            <input class="searchBar" placeholder="Rechercher...">
+            <a class="link" href="https://google.com/"><ion-icon name="search"></ion-icon></a>
+            <ion-icon name="menu-outline" onclick="document.getElementsByClassName('sidebar')[0].style.left = '0'"></ion-icon>
+        </div>
+    </div>
+    <div class="main">
+        <div style="height: 100px;"></div>
+        <h3 class="title" id="title">Résultat pour : </h3>
+        <div class="tendances" id="tendances">
+        </div>
+    </div>
+    <script src="search.js"></script>
+</body>
+</html>

@@ -49,21 +49,46 @@ if(isset($_GET["get"]) && isset($_GET["video_id"])) {
         ":video_id" => $video_id
     ));
     $rows = $statement->fetchAll(PDO::FETCH_ASSOC);
-    foreach ($rows[0] as $key => $value) {
-        $export_array[$key] = $value;
+    $index=0;
+    foreach($rows as $row) {
+        foreach($row as $key => $value) {
+            $export_array[$index][$key] = $value;
+        }
+        
+        if(!empty($row)) {
+            $statement2 = $pdo->prepare("SELECT * FROM users WHERE id=:auth_id LIMIT 1");
+            $statement2->execute(array(
+                ":auth_id" => $row["auth_id"]
+            ));
+            $rows_2 = $statement2->fetchAll(PDO::FETCH_ASSOC);
+            $export_array[$index]["user_name"] = $rows_2[0]["name"];
+            $export_array[$index]["user_avatar"] = $rows_2[0]["avatar"];
+            $export_array[$index]["user_id"] = $rows_2[0]["id"];
+        }
+        $index++;
     }
-
-    $statement = $pdo->prepare("SELECT * FROM users WHERE id=:auth_id LIMIT 1");
-    $statement->execute(array(
-        ":auth_id" => $rows[0]["auth_id"]
-    ));
-    $rows_2 = $statement->fetchAll(PDO::FETCH_ASSOC);
-    foreach ($rows_2[0] as $key => $value) {
-        if($key != "id" and $key != "password" and $key != "description") {
+    /*foreach($rows as $row) {
+        foreach ($rows as $key => $value) {
             $export_array[$key] = $value;
         }
+        print_r($export_array);
+        if(!empty($rows)) {
+            $statement2 = $pdo->prepare("SELECT * FROM users WHERE id=:auth_id LIMIT 1");
+            $statement2->execute(array(
+                ":auth_id" => $row["auth_id"]
+            ));
+            $rows_2 = $statement2->fetchAll(PDO::FETCH_ASSOC);
+            foreach ($rows_2 as $key => $value) {
+                if($key != "id" and $key != "password" and $key != "description") {
+                    $export_array[$key] = $value;
+                }
+    
+            }
+        }
+    }*/
 
-    }
+
+
 
     echo json_encode($export_array);
 }
