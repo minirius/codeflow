@@ -16,7 +16,7 @@
     width: 50vw;
     margin-top:50px;
     border-radius: 20px;
-    box-shadow: 0px 0px 50px 20px rgb(40, 40, 40);
+    box-shadow: 0px 0px 50px 20px lightgrey;
     z-index:50;
 }
 
@@ -27,6 +27,7 @@
     top:55%;
     transform: translate(-50%, -50%);
     cursor: pointer;
+    color: white
 }
 
 #pubSkip {
@@ -36,11 +37,13 @@
     width: 150px;
     background-color: black;
     border: 2px solid white;
+    color: white;
     padding: 10px;
     z-index:52;
     display: none;
     text-align: center;
     opacity: 70%;
+    cursor: not-allowed;
 }
 
 #pubInfo {
@@ -50,6 +53,7 @@
     left:20px;
     align-items:center;
     gap:10px;
+    color: white;
 }
 
 #time {
@@ -80,6 +84,27 @@
     margin-bottom: 50px
 }
 
+.commentDiv {
+    padding-top: 20px;
+}
+
+.commentDiv>div {
+    display: flex;
+    gap: 10px;
+    align-items: center;
+}
+
+.commentDiv>div>img {
+    border-radius: 50%;
+    width: 40px;
+    width: 40px;
+}
+
+.commentDiv>p{
+    margin-top: 5px;
+}
+
+
 .info {
     width: 50vw;
     margin-top: 20px;
@@ -104,7 +129,7 @@
 }
 
 .buttonGroup {
-    background-color: rgb(40, 40, 40);
+    background-color: rgb(235, 235, 235);
     transition: 0.1s ease-in-out;
     border-radius: 15px;
     padding: 10px;
@@ -112,19 +137,20 @@
     align-items: center;
     gap: 10px;
     cursor: pointer;
+    transition: 0.2s ease-in-out;
 }
 
 .buttonGroup:hover {
-    background-color: rgb(60, 60, 60);
+    background-color: lightgrey;
 }
 
 #commentaireInput {
     border: none;
     border-radius: 2px;
     background-color: transparent;
-    border-bottom: 2px solid rgb(220, 220, 220);
+    border-bottom: 2px solid lightgrey;
     padding-bottom: 10px;
-    color: rgb(220, 220, 220);
+    color: black;
     width: 100%;
 }
 #commentaireInput:focus {

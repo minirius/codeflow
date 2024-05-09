@@ -1,9 +1,59 @@
-.box {
-    width: 50vw;
-    margin-left: 25vw;
-    border-radius: 20px;
-    box-shadow: 0px 0px 50px 20px rgb(40, 40, 40);
-    padding: 20px;
-    min-height: 80vh;
-    background-color: rgb(20, 20, 20);
+.loginBlock {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    gap: 50px;
+    margin-top: 100px;
+}
+
+.loginInput {
+    display: flex;
+    width: 30vw;
+    background-color: white;
+    padding-bottom: 10px;
+    border:none;
+    border-bottom: 1px solid grey;
+}
+
+.loginInput:focus {
+    outline-width: 0px;
+    border-bottom: 2px solid blueviolet;
+}
+
+#submitButton {
+    width: 30vw;
+    border-radius: 8px;
+    border: none;
+    background-color: blueviolet;
+    color: white;
+    padding: 10px;
+    cursor: pointer;
+    transition: 0.2s ease-in-out;
+}
+
+#errorBox {
+    background-color: #ffeb3b;
+    padding: 5px;
+    border-radius: 15px;
+    width: 30vw;
+    text-align: center;
+    display: none;
+}
+
+#submitButton:hover {
+    background-color: rgb(108, 4, 205);
+}
+
+.searchHeader {
+    width: 100vw !important;
+}
+
+a {
+    color: blueviolet;
+    text-decoration: none;
+}
+
+a:focus {
+    outline-width: 0px;
 }

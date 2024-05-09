@@ -14,91 +14,44 @@ function getRandomIntInclusive(min, max) {
   max = Math.floor(max);
   return Math.floor(Math.random() * (max - min + 1)) + min;
 }
-class VideoWithBackground {
-    video;
-    canvas;
-    step;
-    ctx;
-  
-    constructor(videoId, canvasId) {
-      this.video = document.getElementById(videoId);
-      this.canvas = document.getElementById(canvasId);
-  
-      window.addEventListener("load", this.init, false);
-      window.addEventListener("unload", this.cleanup, false);
 
-      console.log(document.getElementById(videoId).offsetHeight);
-      document.getElementById(canvasId).style.height = document.getElementById(videoId).offsetHeight+50
+async function showPopup(text) {
+  popup = document.getElementsByClassName("popup")[0];
+  popup.innerHTML = `<p>${text}</p>`;
+  popup.style.top = "30px";
+  await new Promise(res => setTimeout(res, 3000));
+  popup.style.top = "-50vh";
+}
+
+async function share() {
+  if(navigator.canShare) {
+    navigator.share({title:"Partager", text:`Regardez cette vidéo ! ${window.location.href}`}).catch((e) => {showPopup(e);})
+  } else {
+    try {
+      await navigator.clipboard.writeText(window.location.href);
+      console.log('Content copied to clipboard');
+      showPopup("Lien copié");
+      /* Resolved - text copied to clipboard successfully */
+    } catch (err) {
+      console.error('Failed to copy: ', err);
+      alert("Aucun moyen de partager n'est supporté");
+      /* Rejected - text failed to copy to the clipboard */
     }
-  
-    draw = () => {
-      this.ctx.drawImage(this.video, 0, 0, this.canvas.width, this.canvas.height);
-    };
-  
-    drawLoop = () => {
-      this.draw();
-      this.step = window.requestAnimationFrame(this.drawLoop);
-    };
-  
-    drawPause = () => {
-      window.cancelAnimationFrame(this.step);
-      this.step = undefined;
-    };
-  
-    init = () => {
-      this.ctx = this.canvas.getContext("2d");
-      this.ctx.filter = "blur(1px)";
-  
-      this.video.addEventListener("loadeddata", this.draw, false);
-      this.video.addEventListener("seeked", this.draw, false);
-      this.video.addEventListener("play", this.drawLoop, false);
-      this.video.addEventListener("pause", this.drawPause, false);
-      this.video.addEventListener("ended", this.drawPause, false);
-    };
-  
-    cleanup = () => {
-      this.video.removeEventListener("loadeddata", this.draw);
-      this.video.removeEventListener("seeked", this.draw);
-      this.video.removeEventListener("play", this.drawLoop);
-      this.video.removeEventListener("pause", this.drawPause);
-      this.video.removeEventListener("ended", this.drawPause);
-    };
+  }
 }
 
 async function main() {
     //const response = await fetch("https://raw.githubusercontent.com/minirius/codeflow/main/videos/videos.json");
-    const response = await fetch("http://127.0.0.1:5500/videos/videos.json");
-    movies = await response.json();
-    movies = movies["categories"][0]["videos"];
     videoId = findGetParameter("v");
-    console.log(videoId);
-    movies.forEach(movie => {
-        if(videoId == movie["id"]) {
-            source = document.createElement("source");
-            source.src = movie["sources"][0];
-            document.getElementById("video").appendChild(source);
-            document.getElementById("video").onmouseleave = function() {this.controls = false}
-            document.getElementById("video").onmouseenter = function() {this.controls = true}
-            document.getElementById("video").poster = movie["miniature"]
-            document.getElementById("video").addEventListener("ended", function() {})
-            document.getElementById("video").addEventListener("timeupdate", function() {})
-
-            /*source = document.createElement("source");
-            source.src = movie["sources"][0];
-            document.getElementById("videoBlur").appendChild(source);*/
-
-            h5 = document.createElement("h3");
-            h5.innerHTML = movie["title"];
-            p = document.createElement("p");
-            p.innerHTML = movie["description"];
-
-            document.getElementById("content").appendChild(h5);
-            document.getElementById("content").appendChild(p);
-        }
-
-    });
-    
-    const el = new VideoWithBackground('video', 'videoBlur');
+    const response = await fetch("http://127.0.0.1/videos.php?id="+videoId);
+    movie = await response.json();
+    source = document.createElement("source");
+    source.src = movie["video"];
+    document.getElementById("video").appendChild(source);
+    document.getElementById("video").onmouseleave = function() {this.controls = false}
+    document.getElementById("video").onmouseenter = function() {this.controls = true}
+    document.getElementById("video").poster = movie["thumbnail"];
+    document.getElementById("video").addEventListener("ended", function() {})
 
     /*playing = false;
 
@@ -119,7 +72,7 @@ async function main() {
     });*/
 }
 
-tempsRestant = 9;
+tempsRestant = 4;
 canSkip = false;
 
 function allowSkip() {
@@ -138,10 +91,88 @@ function allowSkip() {
 }
 
 async function pub() {
+  if(localStorage.getItem('isConnected') != "true") window.location.pathname = "login.html";
+  document.getElementById("userAvatar").src = localStorage.getItem("avatar");
+
+    videoId = findGetParameter("v");
+    const response = await fetch("http://127.0.0.1/videos.php?id="+videoId);
+    movie = await response.json();
+    if(movie.length==0) {
+      window.location.href = "http://127.0.0.1:5500/new.html"
+    }
+
+    document.getElementById("likeText").innerText = movie["likes"];
+    document.getElementById("shareText").innerText = movie["shares"];
+
+    document.getElementById("userImg").src = movie["avatar"];
+    document.getElementById("userName").innerText = movie["name"];
+    /*source = document.createElement("source");
+    source.src = movie["sources"][0];
+    document.getElementById("videoBlur").appendChild(source);*/
+
+    h5 = document.createElement("h3");
+    h5.innerHTML = movie["titre"];
+    p = document.createElement("p");
+    p.innerHTML = movie["description"];
+    p.style.textAlign = "justify";
+
+    document.getElementById("content").appendChild(h5);
+    document.getElementById("content").appendChild(p);
+
+    const response2 = await fetch("http://127.0.0.1/comments.php?get&video_id="+videoId);
+    comments = await response2.json();
+
+    comments.forEach(comment => {
+      document.getElementById("commentList").innerHTML += `
+      <div class="commentDiv">
+          <div>
+              <img src="${comment["user_avatar"]}"/>
+              <h3>${comment["user_name"]}</h3>
+          </div>
+          <p>${comment["text"]}</p>
+      </div>
+      `;
+    });
+
     source = document.createElement("source");
     source.src =`http://127.0.0.1:5500/pubs/pub${getRandomIntInclusive(1, 4)}.mp4`;
     document.getElementById("video").appendChild(source);
     document.getElementById("video").controls = false;
+
+    auth_id = localStorage.getItem("userId");
+    video_id = findGetParameter("v");
+  
+    const response3 = await fetch(`http://127.0.0.1/likes.php?get&auth_id=${auth_id}&video_id=${video_id}`);
+    reponse = await response3.text();
+    const response4 = await fetch(`http://127.0.0.1/likes.php?getVideo&video_id=${video_id}`);
+    reponse2 = await response4.text();
+
+    document.getElementById("likeText").innerText = reponse2;
+  
+    if(reponse == "1") {
+      document.getElementById("likeIcon").style.color="red";
+      document.getElementById("likeIcon").name="heart";
+      document.getElementById("likeText").style.color="red";
+    }
+    if(reponse == "0") {
+      document.getElementById("likeIcon").style.color="black";
+      document.getElementById("likeIcon").name="heart-outline";
+      document.getElementById("likeText").style.color="black";
+    }
+
+
+    if(localStorage.getItem("pub") == "false") {
+      document.getElementById("pubSkip").style.display = "none"
+      document.getElementById("pubInfo").style.display = "none"
+      document.getElementById("pubPlay").style.display = "none"
+      document.getElementById("time").style.display = "none"
+      document.getElementById("video").pause()
+      document.getElementById("video").innerHTML = ""
+      main()
+      document.getElementById("video").load()
+      document.getElementById("video").play();
+      return '';
+    }
 
     document.getElementById("pubPlay").onclick = function() {
       document.getElementById("video").play()
@@ -151,19 +182,21 @@ async function pub() {
     }
 
     document.getElementById("pubSkip").onclick = function() {
-      document.getElementById("pubSkip").style.display = "none"
-      document.getElementById("pubInfo").style.display = "none"
-      document.getElementById("video").pause()
-      document.getElementById("video").innerHTML = ""
-      document.getElementById("content").innerHTML = ""
-      main()
-      document.getElementById("video").load()
+      if(canSkip) {
+        document.getElementById("pubSkip").style.display = "none"
+        document.getElementById("pubInfo").style.display = "none"
+        document.getElementById("time").style.display = "none"
+        document.getElementById("video").pause()
+        document.getElementById("video").innerHTML = ""
+        main()
+        document.getElementById("video").load()
+      }
     }
 
     document.getElementById("video").addEventListener("ended", function() {
       document.getElementById("pubSkip").style.display = "none"
       document.getElementById("pubInfo").style.display = "none"
-      document.getElementById("time").style.width = "0px"
+      document.getElementById("time").style.display = "none"
       document.getElementById("video").pause()
       document.getElementById("video").innerHTML = ""
       main()
@@ -179,3 +212,43 @@ async function pub() {
 }
 
 window.addEventListener('DOMContentLoaded', pub());
+
+document.getElementById("shareButton").addEventListener("click", function() {share()});
+
+document.getElementById("likeButton").addEventListener("click", async () => {
+  auth_id = localStorage.getItem("userId");
+  video_id = findGetParameter("v");
+
+  const response = await fetch(`http://127.0.0.1/likes.php?get&auth_id=${auth_id}&video_id=${video_id}`);
+  reponse = await response.text();
+  if(reponse == "1") {
+    const response = await fetch(`http://127.0.0.1/likes.php?remove&auth_id=${auth_id}&video_id=${video_id}`);
+    reponse = await response.text();
+    document.getElementById("likeIcon").style.color="black";
+    document.getElementById("likeIcon").name="heart-outline";
+    document.getElementById("likeText").style.color="black";
+
+    likeNbr = parseInt(document.getElementById("likeText").innerText) - 1;
+    document.getElementById("likeText").innerText = likeNbr
+  }
+  if(reponse == "0") {
+    const response = await fetch(`http://127.0.0.1/likes.php?add&auth_id=${auth_id}&video_id=${video_id}`);
+    reponse = await response.text();
+    document.getElementById("likeIcon").style.color="red";
+    document.getElementById("likeIcon").name="heart";
+    document.getElementById("likeText").style.color="red";
+    
+    likeNbr = parseInt(document.getElementById("likeText").innerText) + 1;
+    document.getElementById("likeText").innerText = likeNbr
+  }
+});
+
+document.getElementById("commentForm").addEventListener("submit", async function(e) {
+  e.preventDefault();
+  console.log("sumbitted")
+  commentInput = document.getElementById("commentaireInput")
+  if(commentInput.value != "") {
+    const response2 = await fetch(`http://127.0.0.1/comments.php?add&video_id=${videoId}&auth_id=${localStorage.getItem("userId")}&text=${commentInput.value}`);
+    location.reload();
+  }
+})

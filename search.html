@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="styles.css">
+    <title>NSI</title>
+
+    <script type="module" src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"></script>
+    <script nomodule src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js"></script>
+</head>
+<body>
+    <div class="sidebar">
+        <ion-icon name="close-outline" onclick="document.getElementsByClassName('sidebar')[0].style.left = '-100vw'"></ion-icon>
+        <h3>Menu</h3>
+        <a class="link" href="new.html">Nouveau</a>
+        <a class="link" href="favoris.html">Favoris</a>
+        <a class="link" href="categories.html">Catégories</a>
+    </div>
+    <div class="overlay"></div>
+    <div class="navbar">
+        <a class="link top-link" href="profile.html"><img class="avatar" id="userAvatar" src="https://thispersondoesnotexist.com/"/></a>
+        <a class="link" href="new.html"><ion-icon name="sparkles-outline"></ion-icon></a>
+        <a class="link" href="search.html?search="><ion-icon name="search"></ion-icon></a>
+        <a class="link" href="categories.html"><ion-icon name="grid-outline"></ion-icon></a>
+        <a class="link" href="likes.html"><ion-icon name="heart-outline"></ion-icon></a>
+        <a class="link bottom-link" href="settings.html"><ion-icon name="settings-outline"></ion-icon></a>
+    </div>
+    <div class="main">
+        <div class="searchHeader">
+            <form action="search.html" method="get">
+                <div id="searchDiv">
+                    <ion-icon name="search-outline" id="searchButton"></ion-icon>
+                    <input id="searchBar" autofocus name="search"  type="search" placeholder="Rechercher..." />
+                </div>
+            </form>
+        </div>
+        <div class="tendances" id="tendances">
+        </div>
+    </div>
+    <script src="search.js"></script>
+</body>
+</html>

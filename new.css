@@ -1,6 +1,6 @@
 #hero {
-    height: calc(100vh - 100px);
-    width: 100%;
+    height: calc(100vh);
+    width: calc(100vw - 80px);
     background-color: #cccccc;
     background-position: center; /* Center the image */
     background-repeat: no-repeat; /* Do not repeat the image */
@@ -11,10 +11,10 @@
 #heroCover {
     position: fixed;
     top:100px;
-    left:0px;
+    left:80px;
     z-index: 2;
     height: calc(100vh - 100px);
-    width: 100%;
+    width: calc(100vw - 80px);
     background-image: linear-gradient(rgba(0, 0, 0, 0), rgba(0, 0, 0, 0.8), rgba(0, 0, 0, 1));
 }
 
@@ -25,13 +25,22 @@
 #title {
     position: fixed;
     bottom: 150px;
-    left: 50px;
+    left: 130px;
     font-size: 50px;
+    color: white;
+    width: calc(100vw - 170px);
 }
 
 #desc {
     position: fixed;
-    bottom: 100px;
-    left: 50px;
+    bottom: 20px;
+    left: 130px;
     font-size: 20px;
+    color: white;
+    text-align: justify;
+    width: calc(100vw - 170px);
+}
+
+.main {
+    cursor: pointer;
 }

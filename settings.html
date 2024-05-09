@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="styles.css">
+    <title>NSI</title>
+
+    <script type="module" src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"></script>
+    <script nomodule src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js"></script>
+</head>
+<style>
+    .switch {
+      position: relative;
+      display: inline-block;
+      width: 60px;
+      height: 34px;
+    }
+    
+    .switch input { 
+      opacity: 0;
+      width: 0;
+      height: 0;
+    }
+    
+    .slider {
+      position: absolute;
+      cursor: pointer;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background-color: #ccc;
+      -webkit-transition: .4s;
+      transition: .4s;
+    }
+    
+    .slider:before {
+      position: absolute;
+      content: "";
+      height: 26px;
+      width: 26px;
+      left: 4px;
+      bottom: 4px;
+      background-color: white;
+      -webkit-transition: .4s;
+      transition: .4s;
+    }
+    
+    input:checked + .slider {
+      background-color: blueviolet;
+    }
+    
+    input:focus + .slider {
+      box-shadow: 0 0 1px blueviolet;
+    }
+
+    input:disabled + .slider {
+        opacity: 0.5;
+    }
+    
+    input:checked + .slider:before {
+      -webkit-transform: translateX(26px);
+      -ms-transform: translateX(26px);
+      transform: translateX(26px);
+    }
+    
+    /* Rounded sliders */
+    .slider.round {
+      border-radius: 34px;
+    }
+    
+    .slider.round:before {
+      border-radius: 50%;
+    }
+
+    .parameterElement {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        padding:10px;
+        padding-left: 30px;
+        padding-right: 30px;
+    }
+</style>
+<body>
+    <div class="sidebar">
+        <ion-icon name="close-outline" onclick="document.getElementsByClassName('sidebar')[0].style.left = '-100vw'"></ion-icon>
+        <h3>Menu</h3>
+        <a class="link" href="new.html">Nouveau</a>
+        <a class="link" href="favoris.html">Favoris</a>
+        <a class="link" href="categories.html">Catégories</a>
+    </div>
+    <div class="overlay"></div>
+    <!--<div class="navbar">
+        <div class="leftHeader">
+            <ion-icon name="menu-outline" onclick="document.getElementsByClassName('sidebar')[0].style.left = '0'"></ion-icon>
+            <img src="assets/logo.png" alt="hello" id="headerIcon">
+            <div class="headerLinks">
+                <a class="link" href="new.html">Nouveau</a>
+                <a class="link" href="favoris.html">Favoris</a>
+                <a class="link" href="categories.html">Catégories</a>
+            </div>
+        </div>
+        <div class="rightHeader">
+            <input class="searchBar" placeholder="Rechercher..." id="searchInput">
+            <ion-icon name="menu-outline" onclick="document.getElementsByClassName('sidebar')[0].style.left = '0'"></ion-icon>
+            <a class="link" id="searchButton"><ion-icon name="search"></ion-icon></a>
+        </div>
+    </div>-->
+    <div class="navbar">
+        <a class="link top-link" href="profile.html"><img class="avatar" id="userAvatar" src="https://thispersondoesnotexist.com/"/></a>
+        <a class="link" href="new.html"><ion-icon name="sparkles-outline"></ion-icon></a>
+        <a class="link" href="search.html?search="><ion-icon name="search-outline"></ion-icon></a>
+        <a class="link" href="categories.html"><ion-icon name="grid-outline"></ion-icon></a>
+        <a class="link" href="likes.html"><ion-icon name="heart-outline"></ion-icon></a>
+        <a class="link bottom-link" href="settings.html"><ion-icon name="settings"></ion-icon></a>
+    </div>
+    <div class="main">
+        <div class="searchHeader">
+            <h2 class="title">Paramètres</h2>
+        </div>
+        <div style="height: 20px;"></div>
+        <div class="parameterList">
+            <div class="parameterElement">
+                <h4>Publicités</h4>
+                <label class="switch">
+                    <input type="checkbox" id="pubCheckBox">
+                    <span class="slider round"></span>
+                </label>
+            </div>
+            <div class="parameterElement">
+                <h4>Comptabiliser les vues</h4>
+                <label class="switch">
+                    <input type="checkbox" id="viewCheckBox">
+                    <span class="slider round"></span>
+                </label>
+            </div>
+            <div class="parameterElement">
+                <h4>Thème sombre (en développement)</h4>
+                <label class="switch">
+                    <input type="checkbox" disabled id="themeCheckBox">
+                    <span class="slider round"></span>
+                </label>
+            </div>
+        </div>
+    </div>
+    <script src="settings.js"></script>
+</body>
+</html>

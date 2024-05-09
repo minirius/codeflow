@@ -5,24 +5,55 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="styles.css">
     <link rel="stylesheet" href="login.css">
-    <title>Login</title>
+    <title>NSI</title>
 
     <script type="module" src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"></script>
     <script nomodule src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js"></script>
 </head>
 <body>
-    <div style="height: 100px;"></div>
-    <div class="main">
-        <div class="box">
-            <h2>Login</h2>
-            <form>
-                <input type="text" name="loginName" placeholder="Nom"/>
-                <input type="text" name="loginPassword" placeholder="Mot de passe"/>
-
-                <input type="submit" value="Se connecter"/>
-            </form>
-        </div>
+    <div class="sidebar">
+        <ion-icon name="close-outline" onclick="document.getElementsByClassName('sidebar')[0].style.left = '-100vw'"></ion-icon>
+        <h3>Menu</h3>
+        <a class="link" href="new.html">Nouveau</a>
+        <a class="link" href="favoris.html">Favoris</a>
+        <a class="link" href="categories.html">Catégories</a>
     </div>
-    <script src="video.js"></script>
+    <div class="overlay"></div>
+    <!--<div class="navbar">
+        <div class="leftHeader">
+            <ion-icon name="menu-outline" onclick="document.getElementsByClassName('sidebar')[0].style.left = '0'"></ion-icon>
+            <img src="assets/logo.png" alt="hello" id="headerIcon">
+            <div class="headerLinks">
+                <a class="link" href="new.html">Nouveau</a>
+                <a class="link" href="favoris.html">Favoris</a>
+                <a class="link" href="categories.html">Catégories</a>
+            </div>
+        </div>
+        <div class="rightHeader">
+            <input class="searchBar" placeholder="Rechercher..." id="searchInput">
+            <ion-icon name="menu-outline" onclick="document.getElementsByClassName('sidebar')[0].style.left = '0'"></ion-icon>
+            <a class="link" id="searchButton"><ion-icon name="search"></ion-icon></a>
+        </div>
+    </div>-->
+    <div class="main">
+        <div class="searchHeader">
+            <h2 class="title">Se Connecter</h2>
+        </div>
+        <div style="height: 20px;"></div>
+        <form class="loginBlock" id="loginForm">
+            <div id="errorBox">
+                <h5>Couple Identifiant/Mot de passe incorrect</h5>
+            </div>
+            <div class="loginGroup">
+                <input type="text" name="username" id="username" class="loginInput" placeholder="Pseudo"/>
+            </div>
+            <div class="loginGroup">
+                <input type="password" name="password" id="password" class="loginInput" placeholder="Mot de passe"/>
+            </div>
+            <input type="submit" id="submitButton" value="Se Connecter" />
+            <a href="register.html">S'inscrire</a>
+        </form>
+    </div>
+    <script src="login.js"></script>
 </body>
 </html>

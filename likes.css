@@ -1,0 +1,36 @@
+#videoList {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.videoElement {
+    display: flex;
+    flex-direction: row;
+    padding: 30px;
+    gap: 30px;
+}
+
+.videoElement>img {
+    border-radius: 10px;
+    width: 100%;
+    aspect-ratio: 16/ 9;
+    object-fit: cover;
+    width: 20vw;
+    cursor: pointer;
+}
+
+.videoInfo>p {
+    overflow: hidden;
+    display: -webkit-box;
+    text-align: justify;
+    -webkit-line-clamp: 3; /* number of lines to show */
+            line-clamp: 3; 
+    -webkit-box-orient: vertical;
+}
+
+.videoInfo {
+    display: flex;
+    flex-direction: column;
+    align-items: left;
+}

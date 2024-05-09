@@ -27,13 +27,22 @@
         }
     });
 }*/
+function getRandomIntInclusive(min, max) {
+    min = Math.ceil(min);
+    max = Math.floor(max);
+    return Math.floor(Math.random() * (max - min + 1)) + min;
+  }
 
+  
 async function main() {
+    if(localStorage.getItem('isConnected') != "true") window.location.pathname = "login.html";
+    document.getElementById("userAvatar").src = localStorage.getItem("avatar");
     //const response = await fetch("https://raw.githubusercontent.com/minirius/codeflow/main/videos/videos.json");
-    const response = await fetch("http://127.0.0.1:5500/videos/videos.json");
+    const response = await fetch("http://127.0.0.1/videos.php");
     movies = await response.json();
-    movies = movies["categories"][0]["videos"];
-    movie = movies[0];
+    random = getRandomIntInclusive(0, 13);
+    movie = movies[random];
+    console.log(movie);
     index = movie["id"];
     description = movie["description"];
     /*document.getElementById("tendances").innerHTML+= `
@@ -47,9 +56,13 @@ async function main() {
         <span class="timecode" id="timecode`+index+`">loading</span>
     </a>
     `;*/
-    document.getElementById("hero").style.backgroundImage = `url('${movie["miniature"]}')`;
-    document.getElementById("title").innerHTML = movie["title"];
+    document.getElementById("hero").style.backgroundImage = `url('${movie["thumbnail"]}')`;
+    document.getElementById("title").innerHTML = movie["titre"];
     document.getElementById("desc").innerHTML = movie["description"];
+
+    document.getElementsByClassName("main")[0].addEventListener("click", function(e) {
+        window.location.href = "video.html?v="+index;
+    })
 }
 
 window.addEventListener('DOMCloontentLoaded', main());
