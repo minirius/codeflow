@@ -52,6 +52,15 @@ async function main() {
     document.getElementById("video").onmouseenter = function() {this.controls = true}
     document.getElementById("video").poster = movie["thumbnail"];
     document.getElementById("video").addEventListener("ended", function() {})
+    const response = await fetch("http://127.0.0.1/videos.php?id="+videoId);
+    movie = await response.json();
+    source = document.createElement("source");
+    source.src = movie["video"];
+    document.getElementById("video").appendChild(source);
+    document.getElementById("video").onmouseleave = function() {this.controls = false}
+    document.getElementById("video").onmouseenter = function() {this.controls = true}
+    document.getElementById("video").poster = movie["thumbnail"];
+    document.getElementById("video").addEventListener("ended", function() {})
 
     /*playing = false;
 
@@ -72,6 +81,7 @@ async function main() {
     });*/
 }
 
+tempsRestant = 4;
 tempsRestant = 4;
 canSkip = false;
 
@@ -191,11 +201,21 @@ async function pub() {
         main()
         document.getElementById("video").load()
       }
+      if(canSkip) {
+        document.getElementById("pubSkip").style.display = "none"
+        document.getElementById("pubInfo").style.display = "none"
+        document.getElementById("time").style.display = "none"
+        document.getElementById("video").pause()
+        document.getElementById("video").innerHTML = ""
+        main()
+        document.getElementById("video").load()
+      }
     }
 
     document.getElementById("video").addEventListener("ended", function() {
       document.getElementById("pubSkip").style.display = "none"
       document.getElementById("pubInfo").style.display = "none"
+      document.getElementById("time").style.display = "none"
       document.getElementById("time").style.display = "none"
       document.getElementById("video").pause()
       document.getElementById("video").innerHTML = ""
